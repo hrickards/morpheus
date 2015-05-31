@@ -1,0 +1,14 @@
+from lib.generators.time_generator import TimeGenerator
+
+class HoursGenerator(TimeGenerator):
+    name = 'hours'
+    filename_slug = 'hours'
+
+    # mon = 0 as per datetime lib
+    WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+    def time_map_function(self, message):
+        return message['time'].hour
+
+    def time_possibilities(self):
+        return list(range(24))
