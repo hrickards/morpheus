@@ -16,6 +16,10 @@ class TimeGenerator(Generator):
         # implement in subclass
         return
 
+    def format_possibility(self, possibility):
+        # optionally implement in subclass
+        return possibility
+
     def generate_for_user(self, user):
         # if user is me, do for all messages
         # otherwise, just do for messages with user
@@ -25,6 +29,6 @@ class TimeGenerator(Generator):
         times = map(self.time_map_function, messages)
         counter = Counter(times)
 
-        x = self.time_possibilities()
+        x = map(self.format_possibility, self.time_possibilities())
         y = [counter[possibility] for possibility in self.time_possibilities()]
         PlotlyWrapper.bar(x, y, "%s/%s_%s.png" % (self.PLOTS_DIR, self.filename_slug, self.slug(user)))

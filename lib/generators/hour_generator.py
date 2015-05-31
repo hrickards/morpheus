@@ -1,3 +1,4 @@
+import datetime
 from lib.generators.time_generator import TimeGenerator
 
 class HoursGenerator(TimeGenerator):
@@ -12,3 +13,6 @@ class HoursGenerator(TimeGenerator):
 
     def time_possibilities(self):
         return list(range(24))
+
+    def format_possibility(self, hour):
+        return datetime.time(hour, 0, 0)
