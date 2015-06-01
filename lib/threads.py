@@ -62,3 +62,9 @@ class Threads:
         for user in self.users():
             messages[user] = self.messages_including_from_user(user)
         return messages
+
+    def first_message_date(self):
+        return min(message['time'] for thread in self.db.threads.find() for message in thread['messages'])
+
+    def last_message_date(self):
+        return max(message['time'] for thread in self.db.threads.find() for message in thread['messages'])

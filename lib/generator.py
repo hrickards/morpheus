@@ -1,5 +1,5 @@
 # subclass this
-class Generator:
+class Generator(object):
     PLOTS_DIR = './plots/'
 
     # Human name of generator
@@ -12,6 +12,7 @@ class Generator:
         self.me = me
         if focus_users == None: self.focus_users = [me]
         else: self.focus_users = focus_users
+        self.users = self.focus_users
 
     def generate_for_user(self, user):
         # Implement in subclasses
@@ -27,10 +28,10 @@ class Generator:
         # Implement in subclasses
         return
 
-    # loop over all focus users
+    # loop over all (by default) focus users
     def generate(self):
         self.pregenerate()
-        for user in self.focus_users:
+        for user in self.users:
             print "Generating %s for %s" % (self.name, user.split(' ')[0])
             self.generate_for_user(user)
         self.postgenerate()

@@ -6,7 +6,10 @@ from lib.plotly_wrapper import PlotlyWrapper
 class TimeGenerator(Generator):
     name = 'time'
     filename_slug = 'time'
-    WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    scale_factor = 1 # use if chunking: see TimelineGenerator
+    
+    # store data to potentially combine (so not user-specific) in postgenerate
+    vals = {}
 
     def time_map_function(self, message):
         # implement in subclass
@@ -20,6 +23,10 @@ class TimeGenerator(Generator):
         # optionally implement in subclass
         return possibility
 
+    def graph_gen(self):
+        # override to change graph type
+        return PlotlyWrapper.bar
+
     def generate_for_user(self, user):
         # if user is me, do for all messages
         # otherwise, just do for messages with user
@@ -30,5 +37,9 @@ class TimeGenerator(Generator):
         counter = Counter(times)
 
         x = map(self.format_possibility, self.time_possibilities())
-        y = [counter[possibility] for possibility in self.time_possibilities()]
-        PlotlyWrapper.bar(x, y, "%s/%s_%s.png" % (self.PLOTS_DIR, self.filename_slug, self.slug(user)))
+        y = [counter[possibility]*1.0/self.scale_factor for possibility in self.time_possibilities()]
+
+        # store values in case we do something with them on postgenerate (see timeline_generate)
+        self.vals[user] = y
+
+        self.graph_gen()(x, y, "%s/%s_%s.png" % (self.PLOTS_DIR, self.filename_slug, self.slug(user)))
