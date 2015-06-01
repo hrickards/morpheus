@@ -1,9 +1,11 @@
 import datetime
+from textblob import TextBlob
 from lib.generator import Generator
 from lib.plotly_wrapper import PlotlyWrapper
 
 class ResponseStatsGenerator(Generator):
     name = "response stats"
+    wordlist = 'wordlist'
 
     CONVERSATION_THRESHOLD = datetime.timedelta(minutes=30)
     user_labels = []
@@ -15,6 +17,14 @@ class ResponseStatsGenerator(Generator):
     user_messages_counts = []
     me_message_length_avgs = []
     user_message_length_avgs = []
+    me_sentiments = []
+    user_sentiments = []
+    me_accuracies = []
+    user_accuracies = []
+
+    def pregenerate(self):
+        # build fast in memory wordlist
+        self.words = set(line.strip().lower() for line in open(self.wordlist))
 
     def generate_for_user(self, user):
         # don't want response times to ourself!
@@ -26,10 +36,15 @@ class ResponseStatsGenerator(Generator):
         # average in-conversation response time
         me_response_times = []
         user_response_times = []
+        # number messages
         me_message_count = 0
         user_message_count = 0
+        # avg length messages
         me_message_lengths = []
         user_message_lengths = []
+
+        me_corpus = []
+        user_corpus = []
 
         for thread in self.threads.with_user(user):
             messages = thread['messages']
@@ -37,9 +52,11 @@ class ResponseStatsGenerator(Generator):
                 if messages[i]['user'] == self.me:
                     me_message_count += 1
                     me_message_lengths.append(len(messages[i]['text']))
+                    me_corpus.append(messages[i]['text'])
                 elif messages[i]['user'] == user:
                     user_message_count += 1
                     user_message_lengths.append(len(messages[i]['text']))
+                    user_corpus.append(messages[i]['text'])
 
                 resp_time = abs(messages[i]['time'] - messages[i-1]['time'])
                 # new conversation
@@ -51,6 +68,13 @@ class ResponseStatsGenerator(Generator):
                     if messages[i]['user'] != messages[i-1]['user']:
                         if messages[i]['user'] == self.me: me_response_times.append(resp_time.total_seconds()/60)
                         elif messages[i]['user'] == user: user_response_times.append(resp_time.total_seconds()/60)
+
+        me_blob = TextBlob(" ".join(me_corpus))
+        user_blob = TextBlob(" ".join(user_corpus))
+        self.me_accuracies.append(len([1 for word in me_blob.words if word.lower() in self.words]) * 100.0 / len(me_blob.words))
+        self.user_accuracies.append(len([1 for word in user_blob.words if word.lower() in self.words]) * 100.0 / len(user_blob.words))
+        self.me_sentiments.append(me_blob.sentiment.polarity)
+        self.user_sentiments.append(user_blob.sentiment.polarity)
 
         # normalise initiations to 100%-scale
         scale_factor = 100.0 / (me_initiates + user_initiates)
@@ -99,3 +123,11 @@ class ResponseStatsGenerator(Generator):
             'Me': self.me_message_length_avgs,
             'Other User': self.user_message_length_avgs
         }, "%s/message_lengths.png" % self.PLOTS_DIR)
+        PlotlyWrapper.split_bar(self.user_labels, {
+            'Me': self.me_sentiments,
+            'Other User': self.user_sentiments
+        }, "%s/message_sentiments.png" % self.PLOTS_DIR, epsilon=0.025)
+        PlotlyWrapper.split_bar(self.user_labels, {
+            'Me': self.me_accuracies,
+            'Other User': self.user_accuracies
+        }, "%s/message_accuracies.png" % self.PLOTS_DIR, show_zero=False)

@@ -21,9 +21,14 @@ class PlotlyWrapper:
         cls(data, layout).save(filename)
 
     @classmethod
-    def split_bar(cls, x, ys, filename):
+    def split_bar(cls, x, ys, filename, epsilon=1, show_zero=True):
         data = Data([Bar(x = x, y = y, name=label) for (label, y) in ys.iteritems()])
-        layout = Layout(autosize = False, yaxis = YAxis(range = [0, max(y) + 1]), **cls.DEFAULT_LAYOUT)
+        min_val = min(min(y) for (label, y) in ys.iteritems())
+        max_val = max(max(y) for (label, y) in ys.iteritems())
+        if show_zero:
+            layout = Layout(autosize = False, yaxis = YAxis(range = [0, max_val + epsilon]), **cls.DEFAULT_LAYOUT)
+        else:
+            layout = Layout(autosize = False, yaxis = YAxis(range = [max(min_val - epsilon, 0), max_val + epsilon]), **cls.DEFAULT_LAYOUT)
         cls(data, layout).save(filename)
 
 
