@@ -21,6 +21,13 @@ class PlotlyWrapper:
         cls(data, layout).save(filename)
 
     @classmethod
+    def split_bar(cls, x, ys, filename):
+        data = Data([Bar(x = x, y = y, name=label) for (label, y) in ys.iteritems()])
+        layout = Layout(autosize = False, yaxis = YAxis(range = [0, max(y) + 1]), **cls.DEFAULT_LAYOUT)
+        cls(data, layout).save(filename)
+
+
+    @classmethod
     def line(cls, x, y, filename):
         data = Data([Scatter(x = x, y = y, line=Line(shape='spline'))])
         layout = Layout(autosize = False, yaxis = YAxis(range = [0, max(y) + 1]), **cls.DEFAULT_LAYOUT)
@@ -29,7 +36,7 @@ class PlotlyWrapper:
     @classmethod
     # data = dict of {user: data_array}
     def line_multiple(cls, x, ydata, filename):
-        data = Data([Scatter(x=x, y=ydata[user], name=user, line=Line(shape='spline')) for user in ydata.keys()])
-        max_val = max(max(ydata[user]) for user in ydata.keys())
+        data = Data([Scatter(x=x, y=y, name=user, line=Line(shape='spline')) for (user, y) in ydata.iteritems()])
+        max_val = max(max(y) for (user, y) in ydata.iteritems())
         layout = Layout(autosize = False, yaxis = YAxis(range = [0, max_val + 1]), **cls.DEFAULT_LAYOUT)
         cls(data, layout).save(filename)

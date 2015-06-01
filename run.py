@@ -16,8 +16,8 @@ db = client.morpheus
 cache = Cache()
 threads = Threads(db, me)
 
-from lib.generators.timeline_generator import TimelineGeneratorWrapper
-TimelineGeneratorWrapper(threads, cache, me, focus_users).generate()
+from lib.generators.response_stats_generator import ResponseStatsGenerator
+ResponseStatsGenerator(threads, cache, me, focus_users).generate()
 
 # generators = [
         # WordCloudGenerator,
