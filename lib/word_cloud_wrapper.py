@@ -1,7 +1,7 @@
 from wordcloud import WordCloud
 
 class WordCloudWrapper:
-    FONT_PATH = './droid_sans_mono.ttf'
+    FONT_PATH = './vendor/fonts/droid_sans_mono.ttf'
     WIDTH = 2000
     HEIGHT = 1000
 

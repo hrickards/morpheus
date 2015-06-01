@@ -5,7 +5,7 @@ from lib.plotly_wrapper import PlotlyWrapper
 
 class ResponseStatsGenerator(Generator):
     name = "response stats"
-    wordlist = 'wordlist'
+    wordlist = 'vendor/wordlist'
 
     CONVERSATION_THRESHOLD = datetime.timedelta(minutes=30)
     user_labels = []
