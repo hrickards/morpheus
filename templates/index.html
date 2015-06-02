@@ -1,0 +1,58 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Morpheus</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC|Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/lity.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="js/jquery.js"></script>
+  <script src="js/lity.js"></script>
+  <script src="js/app.js"></script>
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+      <div class="main-row">
+          <h1>Hi, my name is <span class="name">${me['name']}</span> and I'm a<span class="strikethrough">n alcoholic</span> Facebook addict.</h1>
+          <hr />
+
+          <h4><a href="https://github.com/hrickards/morpheus">Morpheus</a> generated some fun, but ultimately meaningless
+          <b>graphs</b> and <b>charts</b> about my <b>Facebook conversations</b>.</h4>
+
+          <h4 class="chosen-ones">It did this for <i>the Chosen Ones</i> : me (obviously), ${", ".join("<span class='name'>" + f['name'] + "</span>" for f in friends[1:-1])} and <span class="name">${friends[-1]['name']}</span>.</h4>
+
+          <div class="go-container">
+              <a class="button button-primary" href="./results.html">See the Results!</a>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

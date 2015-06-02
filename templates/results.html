@@ -1,0 +1,253 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Morpheus</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/lity.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="js/jquery.js"></script>
+  <script src="js/lity.js"></script>
+  <script src="js/app.js"></script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="click_more">
+      <b>Click on the graphs to see them up close!</b>
+    </div>
+
+
+    <div class='result-megacontainer'>
+      <div class="row">
+        <h3>Time of Day</h3>
+        <p>Which of your friends value sleep more than life itself, and which of your friends can peer pressure into staying up all night
+        drinking coffee with them?</p>
+      </div>
+      % for col in chunks(friends, 2):
+        <div class="row">
+          % for i in range(2):
+            <div class="one-half column">
+              <div class="result-container">
+                <img class='result' src="./plots/hours_${col[i]['slug']}.png" />
+                <span class='result-caption'>${col[i]['owner']} hours of the day</span>
+              </div>
+            </div>
+          % endfor
+        </div>
+      % endfor
+    </div>
+
+    <div class='result-megacontainer'>
+      <div class="row">
+        <h3>Days of the Week</h3>
+        <p>Does Alice sleep through the entire weekend? Maybe Bob has nothing better to do on Saturday nights than message you? Now (know) you can find out...</p>
+      </div>
+
+      % for col in chunks(friends, 2):
+        <div class="row">
+          % for i in range(2):
+            <div class="one-half column">
+              <div class="result-container">
+                <img class='result' src="./plots/weekdays_${col[i]['slug']}.png" />
+                <span class='result-caption'>${col[i]['owner']} days of the week</span>
+              </div>
+            </div>
+          % endfor
+        </div>
+      % endfor
+    </div>
+
+
+    <div class='result-megacontainer'>
+      <div class="row">
+        <h3>Evolution</h3>
+        <p>Not the new science fad that hasn't quite reached Texas, but instead graphs tracking how much you talked to each of your friends
+        as the years went by. In the overall picture, not only do we show the friends you selected at generation here, but also your top 10 all-time most-messsaged friends (clever huh!)</p>
+      </div>
+      % for col in chunks(friends, 2):
+        <div class="row">
+          % for i in range(2):
+            <div class="one-half column">
+              <div class="result-container">
+                <img class='result' src="./plots/timeline_5_${col[i]['slug']}.png" />
+                <span class='result-caption'>${col[i]['owner']} messages over time</span>
+              </div>
+            </div>
+          % endfor
+        </div>
+      % endfor
+      <div class="row">
+        <div class="result-container">
+          <img class='result' src="./plots/timeline_15_overall.png" />
+        </div>
+      </div>
+    </div>
+
+    <div class='result-megacontainer'>
+        <div class="row">
+            <h3>Typign Accuracy</h3>
+            <p>
+                Always wondered which of your friends didn't know the difference between <i>now</i> and <i>know</i>? Always wondered whether
+                Eve faked that high school diploma? Suspect that photo of Fred winning the Spelling Bee comes from Photoshop, not
+                talent? Well now you can find out...
+            </p>
+
+            <p>
+                Take this with a grain of salt. We're measuring accuracy by comparing words sent to a (relatively comprehensive) wordlist, and
+                while it's obviously going to miss a lot of things out, relative results should be somewhat valid (at least for the purposes of
+                fun).
+            </p>
+        </div>
+        <div class="row">
+            <div class="result-container">
+                <img class='result' src="./plots/message_accuracies.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class='result-megacontainer'>
+        <div class="row">
+            <h3>Message Sentiment</h3>
+            <p>
+                Find out which of your friends consistently gets out of bed the wrong side every morning, and double-check your suspicions
+                that one friend really is a secret opiate addict. The bigger the bar, the happier the friend (and the bigger the dose).
+            </p>
+        </div>
+        <div class="row">
+            <div class="result-container">
+                <img class='result' src="./plots/message_sentiments.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="result-megacontainer">
+        <div class="row">
+            <h3>Response Times</h3>`
+            <p>
+                Discover which of your friends has serious separation anxiety, and which has so little athletic skill they're instead
+                attempting to become the Usain Bolt of Facebook messaging.
+            </p>
+        </div>
+        <div class="row">
+            <div class="result-container">
+                <img class="result" src="./plots/response_times.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="result-megacontainer">
+        <div class="row">
+            <h3>How Big and How Often?</h3>
+            <p>
+                Nope, still talking about messages. If this one seriously needs explaining, you've probably got bigger problems in
+                your life than a lack of Facebook message analytics...
+            </p>
+        </div>
+        <div class="row">
+            <div class="one-half column">
+                <div class="result-container">
+                    <img class="result" src="./plots/message_lengths.png" />
+                    <span class='result-caption'>Average Message Lengths</span>
+                </div>
+            </div>
+            <div class="one-half column">
+                <div class="result-container">
+                    <img class="result" src="./plots/message_counts.png" />
+                    <span class='result-caption'>Message Frequency as a % of the Conversation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-megacontainer">
+        <div class="row">
+            <h3>Initiations</h3>
+            <p>
+                We've all got that one friend who screams <i>"YOU NEVER INITIATE CONVERSATIONS WITH ME, GODDAMNIT"</i>; now you can see
+                just how high a dose of antipsychotics they need. No goats were harmed in the making of this graph.
+            </p>
+            <div class="result-container">
+                <img class="result" src="./plots/initiates.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="result-megacontainer">
+        <div class="row">
+            <h3>Gossip</h3>
+            <p>
+                You've always had suspicions that Tim was a gossipy little bitch that couldn't shut up about how Eve got with that cute
+                Asian at the cocktail party last night. Now you can find out! The thicker the arrow from <i>X</i> to <i>Y</li>, the more
+                <i>X</i> talks about <i>Y</i>.
+            </p>
+            <div class="result-container">
+                <img class="result" src="./plots/connections.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class='result-megacontainer'>
+      <div class="row">
+          <h3>Wordclouds</h3>
+          <p>There are two types here: your standard frequency-based wordcloud, and <i>TF-IDF</i> wordclouds. Without going into the details,
+          TF-IDF wordclouds show you words a particular friend uses a lot more than the rest of your friends (as opposed to regular wordclouds
+          which just show you the words they use a lot).</p>
+      </div>
+      <div class="row">
+        <div class="one-half column">
+          % for friend in friends:
+          <div class='result-container'>
+            <img class='result' src="./plots/wordcloud_${friend['slug']}.png" />
+            <span class='result-caption'>${friend['owner']} wordcloud</span>
+          </div>
+          % endfor
+        </div>
+        <div class="one-half column">
+          % for friend in friends:
+          <div class='result-container'>
+            <img class='result' src="./plots/wordcloud_tfidf_${friend['slug']}.png" />
+            <span class='result-caption'>${friend['owner']} TF-IDF wordcloud</span>
+          </div>
+          % endfor
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="go-container">
+      <a class="button button-primary" href="https://github.com/hrickards/morpheus">Generate your Own!</a>
+  </div>
+
+  <!-- End Document
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

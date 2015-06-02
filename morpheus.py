@@ -2,19 +2,18 @@ import os, pymongo, webbrowser
 from clint.textui import colored, puts
 from lib.parser import Parser
 from lib.morpheus import Morpheus
+from lib.output import Output
 
 # db setup
 client = pymongo.MongoClient()
 db = client.morpheus
 db.threads.drop()
 
+# plots dir
+if not os.path.exists('./site/plots'): os.makedirs('./site/plots')
+
 puts('Hi there!')
 puts()
-puts("You can check out the results by opening " + colored.blue("output/index.html") + " in a browser (and")
-puts("we've tried to open one automatically for you!")
-full_path = os.path.realpath(__file__)
-web_path = os.path.dirname(full_path) + "/output/index.html"
-webbrowser.open(web_path)
 
 puts("First things first, you'll need to head over to Facebook to download your data.")
 puts("Go to " + colored.blue('https://www.facebook.com/settings') + " and click on ")
@@ -25,7 +24,7 @@ puts()
 puts("When you've done that, just hit enter!")
 raw_input()
 
-while not os.path.isdir('./data'):
+while not (os.path.isdir('./data') and os.path.isdir('./data/html')):
     puts(colored.red("Oops - it looks as though you haven't put your data in the ") + colored.blue("data/") + colored.red(" folder."))
     puts("Try again, and hit enter when you're done")
     raw_input()
@@ -77,6 +76,11 @@ puts(colored.green("Awesome! Your job is done, now just sit back and wait while 
 puts(colored.green("everything.") + " This should take about 5 minutes or so, so please be patient!")
 
 Morpheus(db, me, friends).run()
+Output(me, friends).render()
 
 puts(colored.green("All done!"))
-puts("You can check out the results by opening " + colored.blue("output/index.html") + " in a browser")
+puts("You can check out the results by opening " + colored.blue("site/index.html") + " in a browser (and")
+puts("we've tried to open one automatically for you!")
+full_path = os.path.realpath(__file__)
+web_path = os.path.dirname(full_path) + "/site/index.html"
+webbrowser.open(web_path)

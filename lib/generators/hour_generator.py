@@ -4,6 +4,9 @@ from lib.generators.time_generator import TimeGenerator
 class HoursGenerator(TimeGenerator):
     name = 'hours'
     filename_slug = 'hours'
+    xtitle = 'Time of Day'
+    ytitle = 'Total Number of Messages Sent'
+    title = 'Number of Messages Sent by Hour of the Day'
 
     # mon = 0 as per datetime lib
     WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']

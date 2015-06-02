@@ -1,0 +1,51 @@
+.result-container {
+    padding: 0.5em;
+}
+
+.result {
+    width: 100%;
+    display: block;
+}
+
+.result-caption {
+    font-style: italic;
+}
+
+.result-megacontainer {
+    margin-bottom: 3em;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.inline {
+    display: inline;
+}
+
+.life {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-size: 0.2em;
+}
+
+.chosen-ones {
+    margin-top: 1em;
+}
+
+.go-container {
+    text-align: center;
+}
+
+.name {
+  font-family: 'Patrick Hand SC', cursive;
+  font-size: 115%;
+}
+
+.main-row {
+    margin-top: 10%;
+}
+
+.click_more {
+    text-align: center;
+}

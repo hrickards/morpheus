@@ -23,6 +23,7 @@ class Morpheus(object):
         self.db = db
         self.me = me
         self.focus_users = focus_users
+        if not me in self.focus_users: self.focus_users.append(me)
 
         # setup app-wide singletons
         self.cache = Cache()

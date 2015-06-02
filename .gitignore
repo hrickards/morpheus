@@ -1,6 +1,7 @@
 data
-plots
 *.swp
 *.pyc
-output
 *.swo
+site/index.html
+site/results.html
+site/plots

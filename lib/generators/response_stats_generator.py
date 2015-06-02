@@ -109,25 +109,49 @@ class ResponseStatsGenerator(Generator):
     def postgenerate(self):
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_initiate_counts,
-            'Other User': self.user_initiate_counts
-        }, "%s/initiates.png" % self.PLOTS_DIR)
+            'Friend': self.user_initiate_counts
+        }, "%s/initiates.png" % self.PLOTS_DIR,
+            title="Who Initiates Conversations",
+            ytitle="% initiated",
+            colors=self.colors(2)
+        )
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_response_time_avgs,
-            'Other User': self.user_response_time_avgs
-        }, "%s/response_times.png" % self.PLOTS_DIR)
+            'Friend': self.user_response_time_avgs
+        }, "%s/response_times.png" % self.PLOTS_DIR,
+            title="Average Response Time",
+            ytitle="Response Time (minutes)",
+            colors=self.colors(2)
+        )
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_messages_counts,
-            'Other User': self.user_messages_counts
-        }, "%s/message_counts.png" % self.PLOTS_DIR)
+            'Friend': self.user_messages_counts
+        }, "%s/message_counts.png" % self.PLOTS_DIR,
+            title="Message Counts",
+            ytitle="Number of Messages",
+            colors=self.colors(2)
+        )
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_message_length_avgs,
-            'Other User': self.user_message_length_avgs
-        }, "%s/message_lengths.png" % self.PLOTS_DIR)
+            'Friend': self.user_message_length_avgs
+        }, "%s/message_lengths.png" % self.PLOTS_DIR,
+            title="Average Message Length",
+            ytitle="Message Length (characters)",
+            colors=self.colors(2)
+        )
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_sentiments,
-            'Other User': self.user_sentiments
-        }, "%s/message_sentiments.png" % self.PLOTS_DIR, epsilon=0.025)
+            'Friend': self.user_sentiments
+        }, "%s/message_sentiments.png" % self.PLOTS_DIR, epsilon=0.025,
+            title="Message Sentiment",
+            ytitle="Polarity (higher = happier, lower = sadder)",
+            colors=self.colors(2)
+        )
         PlotlyWrapper.split_bar(self.user_labels, {
             'Me': self.me_accuracies,
-            'Other User': self.user_accuracies
-        }, "%s/message_accuracies.png" % self.PLOTS_DIR, show_zero=False)
+            'Friend': self.user_accuracies
+        }, "%s/message_accuracies.png" % self.PLOTS_DIR, show_zero=False,
+            title="Typing Accuracies",
+            ytitle="% Accuracy",
+            colors=self.colors(2)
+        )

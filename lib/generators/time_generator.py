@@ -7,6 +7,7 @@ class TimeGenerator(Generator):
     name = 'time'
     filename_slug = 'time'
     scale_factor = 1 # use if chunking: see TimelineGenerator
+    ytitle = 'Messages Sent'
     
     # store data to potentially combine (so not user-specific) in postgenerate
     vals = {}
@@ -42,4 +43,4 @@ class TimeGenerator(Generator):
         # store values in case we do something with them on postgenerate (see timeline_generate)
         self.vals[user] = y
 
-        self.graph_gen()(x, y, "%s/%s_%s.png" % (self.PLOTS_DIR, self.filename_slug, self.slug(user)))
+        self.graph_gen()(x, y, "%s/%s_%s.png" % (self.PLOTS_DIR, self.filename_slug, self.slug(user)), title=self.title, xtitle=self.xtitle, ytitle=self.ytitle, color=self.color())
