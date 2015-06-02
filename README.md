@@ -12,6 +12,12 @@ You'll also need to install the pertinent python libraries with
 
     pip install -r requirements.txt
 
+Finally you'll need to install the various NLTK datasets. Open up a python console (`python2` in a terminal) and run the command
+    
+    import nltk; nltk.download()
+
+Use the graphical interface to download `movie_reviews` and `stopwords` from the Corpora tab, and `punkt` from the Models tab.
+
 Then just fire everything up with
 
     python2 morpheus.py
