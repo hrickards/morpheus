@@ -128,7 +128,7 @@ class ResponseStatsGenerator(Generator):
             'Friend': self.user_messages_counts
         }, "%s/message_counts.png" % self.PLOTS_DIR,
             title="Message Counts",
-            ytitle="Number of Messages",
+            ytitle="Number of Messages (% of conversation)",
             colors=self.colors(2)
         )
         PlotlyWrapper.split_bar(self.user_labels, {
