@@ -19,6 +19,18 @@ class Parser(object):
 
         for child in Parser.chunks(list(thread), 2):
             message = {}
+            if len(child) < 1:
+                print("zero child, something's weird here...")
+                continue
+            if len(child[0].xpath('.//span[@class="user"]')) < 1:
+                print child[0][0:250]
+                print("can't find user, something's weird here...")
+                continue
+            if len(child[0].xpath('.//span[@class="meta"]')) < 1:
+                print child[0][0:250]
+                print("can't find time, something's weird here...")
+                continue
+
             message['user'] = child[0].xpath('.//span[@class="user"]')[0].text
 
             raw_time = child[0].xpath('.//span[@class="meta"]')[0].text
